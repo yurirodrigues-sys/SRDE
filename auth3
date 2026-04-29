@@ -39,11 +39,16 @@ def deletar_conta():
     email = input("E-mail institucional: ").strip().lower()
     senha = input("Senha: ").strip()
     
-    if not os.path.exists(ARQUIVO_BANCO): print("Usuário não encontrado."); return
+    if not os.path.exists(ARQUIVO_BANCO):
+        print("Usuário não encontrado.")
+        return
     
-    with open(ARQUIVO_BANCO, "r") as f: linhas = f.readlines()
+    with open(ARQUIVO_BANCO, "r") as f:
+        linhas = f.readlines()
     
     encontrado = False
+    deletado = False
+    
     with open(ARQUIVO_BANCO, "w") as f:
         for linha in linhas:
             u, s = linha.strip().split('=')
@@ -52,6 +57,7 @@ def deletar_conta():
                     confirmacao = input("Tem certeza que deseja deletar sua conta? (s/n): ").strip().lower()
                     if confirmacao == 's':
                         encontrado = True
+                        deletado = True
                         print("Conta deletada com sucesso!")
                     else:
                         f.write(linha)
@@ -62,4 +68,5 @@ def deletar_conta():
             else:
                 f.write(linha)
     
-    if not encontrado and email: print("E-mail não encontrado.")
+    if not encontrado:
+        print("E-mail não encontrado.")
