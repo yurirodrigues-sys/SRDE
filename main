@@ -15,7 +15,7 @@ def login():
             if u == email and s == senha:
                 while True:
                     print(f"\n=== Bem vindo a UniClasse {nome_usuario} ===")
-                    print("1. Entrar na Sala 1\n2. Logout")
+                    print("1. Entrar no Laboratório 41\n2. Logout")
                     if input("Opção: ") == "1": menu_sala()
                     else: break
                 return
