@@ -1,4 +1,4 @@
-from auth import registrar_usuario, recuperar_senha
+from auth import registrar_usuario, recuperar_senha,deletar_conta
 from sala import menu_sala
 import os
 
@@ -15,8 +15,9 @@ def login():
             if u == email and s == senha:
                 while True:
                     print(f"\n=== Bem vindo a UniClasse {nome_usuario} ===")
-                    print("1. Entrar no Laboratório 41\n2. Logout")
+                    print("1. Entrar no Laboratório 41\n2. logout")
                     if input("Opção: ") == "1": menu_sala()
+                   
                     else: break
                 return
     print("Credenciais inválidas.")
@@ -24,12 +25,13 @@ def login():
 def main():
     while True:
         print("\n=== UniClasse ===")
-        print("1. Login\n2. Cadastrar\n3. Recuperar senha\n4. Sair")
+        print("1. Login\n2. Cadastrar\n3. Recuperar senha\n4. Sair\n5. deletar")
         op = input("Opção: ")
         if op == "1": login()
         elif op == "2": registrar_usuario()
         elif op == "3": recuperar_senha()
         elif op == "4": break
+        elif op == "5": deletar_conta()
 
 if __name__ == "__main__":
     main()
