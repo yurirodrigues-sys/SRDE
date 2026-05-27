@@ -20,7 +20,8 @@ def login():
                      else: 
                        break
                  return
-                 print("Credenciais inválidas.")
+            else:
+                        print("Credenciais inválidas.")
         
 def main():
     inicializar_banco()        
