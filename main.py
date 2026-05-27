@@ -1,11 +1,8 @@
-from auth2 import registrar_usuario, recuperar_senha,deletar_conta
-from sala2 import menu_sala
+from auth import registrar_usuario, recuperar_senha,deletar_conta
+from sala import menu_sala
 from data_base import inicializar_banco, obter_conexao
 
-def main():
-    inicializar_banco()
-    while True:
-        def login():
+def login():
             email = input("E-mail: ").strip().lower()
             nome_usuario = email.split('.')[0]
             senha = input("Senha: ").strip()
@@ -25,6 +22,9 @@ def main():
                  return
                  print("Credenciais inválidas.")
 
+def main():
+    inicializar_banco()
+        
 def main():
     while True:
         print("\n=== UniClasse ===")
