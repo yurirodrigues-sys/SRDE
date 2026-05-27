@@ -21,11 +21,9 @@ def login():
                        break
                  return
                  print("Credenciais inválidas.")
-
-def main():
-    inicializar_banco()
         
 def main():
+    inicializar_banco()        
     while True:
         print("\n=== UniClasse ===")
         print("1. Login\n2. Cadastrar\n3. Recuperar senha\n4. Sair\n5. deletar")
