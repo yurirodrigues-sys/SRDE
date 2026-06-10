@@ -1,6 +1,6 @@
 from equipamentos import Eletronico, Cadeira
 from inventory import salvar_avaliacao
-from utils2 import limpar_tela
+from utils import limpar_tela
 INVENTARIO = {}
 
 # Cadastrando os PCs fornecidos
