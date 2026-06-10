@@ -1,5 +1,5 @@
 from equipamentos import Eletronico, Cadeira
-from inventory2 import salvar_avaliacao
+from inventory import salvar_avaliacao
 from utils2 import limpar_tela
 INVENTARIO = {}
 
