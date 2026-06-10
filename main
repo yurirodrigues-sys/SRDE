@@ -1,29 +1,39 @@
 from auth import registrar_usuario, recuperar_senha,deletar_conta
 from sala import menu_sala
-import os
+from data_base import inicializar_banco, obter_conexao
+from utils import limpar_tela
+from banheiros import menu_banheiros
 
 def login():
-    if not os.path.exists("usuarios.txt"): print("Sem usuários."); return
-    email = input("E-mail: ").strip().lower()
-    # split do email para aparecer so a primeira palavra
-    nome_usuario = email.split('.')[0]
-    
-    senha = input("Senha: ").strip()
-    with open("usuarios.txt", "r") as f:
-        for linha in f:
-            u, s = linha.strip().split('=')
-            if u == email and s == senha:
-                while True:
-                    print(f"\n=== Bem vindo a UniClasse {nome_usuario} ===")
-                    print("1. Entrar no Laboratório 41\n2. logout")
-                    if input("Opção: ") == "1": menu_sala()
+            limpar_tela()
+            email = input("E-mail: ").strip().lower()
+            nome_usuario = email.split('.')[0]
+            senha = input("Senha: ").strip()
+            conn = obter_conexao()
+            cursor = conn.cursor()
+            cursor.execute("SELECT email FROM usuarios WHERE email = ? AND senha = ?", (email, senha))
+            usuario_valido = cursor.fetchone()
+            conn.close()
+            if usuario_valido:
+                 while True:
+                     limpar_tela()
+                     print(f"\n=== Bem vindo a UniClasse {nome_usuario} ===")
+                     print("1. Entrar no Laboratório 41\n2. Banheiros\n3. Logout")  
+                     opcao = input("Opção: ").strip()
+                     if opcao == "1":
+                         menu_sala()
+                     elif opcao == "2":
+                         menu_banheiros()
+                     elif opcao == "3":
+                         break
+                 return
+            else:
+                   print("Credenciais inválidas.")
                    
-                    else: break
-                return
-    print("Credenciais inválidas.")
-
 def main():
+    inicializar_banco()
     while True:
+        limpar_tela()
         print("\n=== UniClasse ===")
         print("1. Login\n2. Cadastrar\n3. Recuperar senha\n4. Sair\n5. deletar")
         op = input("Opção: ")
