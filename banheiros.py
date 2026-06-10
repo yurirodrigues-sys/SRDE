@@ -1,6 +1,6 @@
 from equipamentos import EquipamentoSanitario
-from inventory2 import salvar_avaliacao
-from utils2 import limpar_tela
+from inventory import salvar_avaliacao
+from utils import limpar_tela
 
 BANHEIROS_INVENTARIO = {}
 
