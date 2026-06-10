@@ -1,6 +1,6 @@
 import sqlite3
 from data_base import obter_conexao
-from utils2 import validar_email,validar_senha
+from utils import validar_email,validar_senha
 
 def registrar_usuario():
     print("\n--- CADASTRO ---")
