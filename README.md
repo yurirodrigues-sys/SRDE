@@ -1,5 +1,5 @@
 # UniClass
-UniClass é um aplicativo para android com a função de registrar e verificar a estrutura pertencente à Ceagri II.
+UniClass é uma plataforma com interface de terminal (TUI) desenvolvida no Python com a função de registrar e verificar a estrutura pertencente à Ceagri II.
 
 Principais aspectos
 
@@ -9,11 +9,9 @@ Principais aspectos
 
 # V1.0 (1VA)
 
-• Sistema de Cadastro e Login
+• Sistema CRUD (Cadastro, Login, Deletar Conta, Recuperar Senha)
 
-•
-
-•
+• Avaliação dos equipamentos
 
 
 # V2.0 (2VA)
