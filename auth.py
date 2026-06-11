@@ -1,6 +1,7 @@
-import sqlite3
-from data_base import obter_conexao
-from utils import validar_email,validar_senha
+import os
+from utils import validar_email, validar_senha
+
+ARQUIVO_BANCO = "usuarios.txt"
 
 def registrar_usuario():
     print("\n--- CADASTRO ---")
@@ -8,63 +9,62 @@ def registrar_usuario():
     if not validar_email(email): print("Erro: Formato inválido!"); return
     senha = input("Senha (8+ números, sem consecutivos): ").strip()
     if not validar_senha(senha): print("Erro: Senha inválida."); return
-    
-    conn = obter_conexao()
-    cursor = conn.cursor()
-    try:
-        # O uso de '?' previne SQL Injection
-        cursor.execute("INSERT INTO usuarios (email, senha) VALUES (?, ?)", (email, senha))
-        conn.commit()
-        print("Sucesso!")
-    except sqlite3.IntegrityError:
-        print("Erro: Este e-mail já está cadastrado.")
-    finally:
-        conn.close()
+    with open(ARQUIVO_BANCO, "a") as f: f.write(f"{email}={senha}\n")
+    print("Sucesso!")
 
 def recuperar_senha():
     print("\n--- RECUPERAÇÃO DE SENHA ---")
     email = input("E-mail institucional: ").strip().lower()
+    if not os.path.exists(ARQUIVO_BANCO): print("Usuário não encontrado."); return
     
-    conn = obter_conexao()
-    cursor = conn.cursor()
+    with open(ARQUIVO_BANCO, "r") as f: linhas = f.readlines()
     
-    # Verifica se o usuário existe
-    cursor.execute("SELECT email FROM usuarios WHERE email = ?", (email,))
-    if not cursor.fetchone():
-        print("E-mail não encontrado.")
-        conn.close()
-        return
-        
-    print("E-mail encontrado! Defina sua nova senha:")
-    nova = input("Nova senha: ").strip()
-    if validar_senha(nova):
-        cursor.execute("UPDATE usuarios SET senha = ? WHERE email = ?", (nova, email))
-        conn.commit()
-        print("Senha atualizada!")
-    else:
-        print("Erro: Senha inválida.")
-    conn.close()
+    encontrado = False
+    with open(ARQUIVO_BANCO, "w") as f:
+        for linha in linhas:
+            u, s = linha.strip().split('=')
+            if u == email:
+                print("E-mail encontrado! Defina sua nova senha:")
+                nova = input("Nova senha: ").strip()
+                if validar_senha(nova):
+                    f.write(f"{u}={nova}\n")
+                    encontrado = True
+                    print("Senha atualizada!")
+                else: f.write(linha); print("Erro: Senha inválida.")
+            else: f.write(linha)
+    if not encontrado: print("E-mail não encontrado.")
 
 def deletar_conta():
     print("\n--- DELETAR CONTA ---")
     email = input("E-mail institucional: ").strip().lower()
     senha = input("Senha: ").strip()
     
-    conn = obter_conexao()
-    cursor = conn.cursor()
-    
-    # Verifica se a senha bate
-    cursor.execute("SELECT email FROM usuarios WHERE email = ? AND senha = ?", (email, senha))
-    if not cursor.fetchone():
-        print("E-mail não encontrado ou senha incorreta.")
-        conn.close()
+    if not os.path.exists(ARQUIVO_BANCO): 
+        print("Usuário não encontrado.")
         return
-        
-    confirmacao = input("Tem certeza que deseja deletar sua conta? (s/n): ").strip().lower()
-    if confirmacao == 's':
-        cursor.execute("DELETE FROM usuarios WHERE email = ?", (email,))
-        conn.commit()
-        print("Conta deletada com sucesso!")
-    else:
-        print("Operação cancelada.")
-    conn.close()
+    
+    with open(ARQUIVO_BANCO, "r") as f: 
+        linhas = f.readlines()
+    
+    encontrado = False
+    with open(ARQUIVO_BANCO, "w") as f:
+        for linha in linhas:
+            u, s = linha.strip().split('=')
+            if u == email:
+                if s == senha:
+                    confirmacao = input("Tem certeza que deseja deletar sua conta? (s/n): ").strip().lower()
+                    if confirmacao == 's':
+                        encontrado = True
+                        print("Conta deletada com sucesso!")
+                        # Ao não escrever a linha, o usuário é removido
+                    else:
+                        f.write(linha)
+                        print("Operação cancelada.")
+                else:
+                    f.write(linha)
+                    print("Erro: Senha incorreta.")
+            else:
+                f.write(linha)
+    
+    if not encontrado: 
+        print("E-mail não encontrado ou senha incorreta.")
