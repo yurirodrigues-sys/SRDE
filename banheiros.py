@@ -1,10 +1,14 @@
 from equipamentos import EquipamentoSanitario
-from inventory import salvar_avaliacao
-from utils import limpar_tela
+from inventory2 import solicitar_avaliacao, exibir_historico_avaliacoes
+from utils2 import limpar_tela
+from rich.console import Console
+from rich.panel import Panel
+from rich.table import Table
+
+console = Console()
 
 BANHEIROS_INVENTARIO = {}
 
-# --- CADASTRO AUTOMÁTICO DOS BANHEIROS ---
 andares = ["TERREO", "1ANDAR", "2ANDAR", "3ANDAR"]
 posicoes = {"E": "Esquerda", "M": "Meio", "D": "Direita"}
 
@@ -18,27 +22,7 @@ for andar in andares:
         BANHEIROS_INVENTARIO[id_vaso] = EquipamentoSanitario(id_vaso, f"Vaso {nome_pos} (Banheiro {nome_andar})", "Vaso Sanitário")
 
 
-def executar_fluxo_avaliacao(alvo_id, nome_alvo):
-    print(f"\nDefina o estado de: {nome_alvo}")
-    print("1. Bom | 2. Desgastado | 3. Quebrado")
-    aval = input("Status: ")
-    
-    if aval == "1": 
-        salvar_avaliacao(alvo_id, "Bom")
-        print("Avaliação salva com sucesso!")
-    elif aval == "2": 
-        desc = input("Descrição do desgaste: ")
-        salvar_avaliacao(alvo_id, "Desgastado", desc)
-        print("Avaliação salva com sucesso!")
-    elif aval == "3": 
-        salvar_avaliacao(alvo_id, "Quebrado")
-        print("Avaliação salva com sucesso!")
-    else:
-        print("Opção de status inválida.")
-    input("\nPressione Enter para continuar...")
-
-
-def menu_banheiros():
+def menu_banheiros(usuario_email="Desconhecido"):
     andares_opcoes = {
         "1": ("TERREO", "Térreo"),
         "2": ("1ANDAR", "1º Andar"),
@@ -48,41 +32,51 @@ def menu_banheiros():
     
     while True:
         limpar_tela()
-        print("\n--- SELEÇÃO DE BANHEIRO ---")
-        print("1. Banheiro Térreo")
-        print("2. Banheiro 1º Andar")
-        print("3. Banheiro 2º Andar")
-        print("4. Banheiro 3º Andar")
+        console.print(Panel("[bold cyan]=== VISTORIA: BANHEIROS DO PRÉDIO ===[/]", expand=False))
+        print("1. Banheiro do Térreo")
+        print("2. Banheiro do 1º Andar")
+        print("3. Banheiro do 2º Andar")
+        print("4. Banheiro do 3º Andar")
         print("0. Voltar")
         
-        opcao_andar = input("Escolha o andar: ").strip()
+        opcao_andar = input("\nSelecione o andar: ").strip()
         if opcao_andar == "0":
             break
             
         if opcao_andar in andares_opcoes:
-            andar_sigla, andar_nome = andares_opcoes[opcao_andar]
+            andar_chave, andar_nome = andares_opcoes[opcao_andar]
             
             while True:
                 limpar_tela()
-                print(f"\n=== EQUIPAMENTOS DO BANHEIRO: {andar_nome.upper()} ===")
+                console.print(Panel(f"[bold cyan]Banheiro - {andar_nome}[/]", expand=False))
                 
-                # Mapeia dinamicamente os objetos criados no dicionário local do módulo
-                equipamentos = [
-                    {"id": f"B_{andar_sigla}_PIA_E", "nome": "Pia Esquerda", "obj": BANHEIROS_INVENTARIO[f"B_{andar_sigla}_PIA_E"]},
-                    {"id": f"B_{andar_sigla}_PIA_M", "nome": "Pia Meio", "obj": BANHEIROS_INVENTARIO[f"B_{andar_sigla}_PIA_M"]},
-                    {"id": f"B_{andar_sigla}_PIA_D", "nome": "Pia Direita", "obj": BANHEIROS_INVENTARIO[f"B_{andar_sigla}_PIA_D"]},
-                    {"id": f"B_{andar_sigla}_VASO_E", "nome": "Vaso Esquerdo", "obj": BANHEIROS_INVENTARIO[f"B_{andar_sigla}_VASO_E"]},
-                    {"id": f"B_{andar_sigla}_VASO_M", "nome": "Vaso Meio", "obj": BANHEIROS_INVENTARIO[f"B_{andar_sigla}_VASO_M"]},
-                    {"id": f"B_{andar_sigla}_VASO_D", "nome": "Vaso Direito", "obj": BANHEIROS_INVENTARIO[f"B_{andar_sigla}_VASO_D"]},
-                ]
+                equipamentos = []
+                for k, eq in BANHEIROS_INVENTARIO.items():
+                    if f"B_{andar_chave}_" in k:
+                        equipamentos.append({"id": k, "nome": eq.nome, "obj": eq})
+                        
+                tabela = Table(title=f"Itens do Banheiro ({andar_nome})")
+                tabela.add_column("Nº", justify="center", style="bold")
+                tabela.add_column("Equipamento")
+                tabela.add_column("Último Status Registrado")
                 
-                print("Selecione qual deseja avaliar:")
                 for idx, eq in enumerate(equipamentos, start=1):
-                    status = eq["obj"].obter_status_atual()
-                    print(f"{idx}. {eq['nome']} ({status})")
-                print("0. Voltar")
+                    status_raw = eq["obj"].obter_status_atual()
+                    if "Status: Bom" in status_raw:
+                        status_colorido = f"[green]{status_raw}[/]"
+                    elif "Status: Quebrado" in status_raw:
+                        status_colorido = f"[red]{status_raw}[/]"
+                    elif "Status: Desgastado" in status_raw:
+                        status_colorido = f"[yellow]{status_raw}[/]"
+                    else:
+                        status_colorido = f"[white]{status_raw}[/]"
+                        
+                    tabela.add_row(str(idx), eq['nome'], status_colorido)
                 
-                opcao_eq = input("Opção: ").strip()
+                console.print(tabela)
+                console.print("\n[bold red]0.[/] Voltar")
+                
+                opcao_eq = input("\nSelecione qual deseja gerenciar: ").strip()
                 if opcao_eq == "0":
                     break
                     
@@ -90,13 +84,30 @@ def menu_banheiros():
                     idx_eq = int(opcao_eq) - 1
                     if 0 <= idx_eq < len(equipamentos):
                         escolhido = equipamentos[idx_eq]
-                        executar_fluxo_avaliacao(escolhido["id"], f"{escolhido['nome']} do {andar_nome}")
+                        
+                        while True:
+                            limpar_tela()
+                            console.print(Panel(f"[bold cyan]Gerenciamento:[/] {escolhido['nome']}\n[yellow]ID:[/] {escolhido['id']}", expand=False))
+                            print("\n1. Registrar nova avaliação")
+                            print("2. Visualizar Histórico completo de avaliações")
+                            print("3. Voltar")
+                            op_acao = input("\nOpção: ").strip()
+                            
+                            if op_acao == "3":
+                                break
+                            elif op_acao == "1":
+                                limpar_tela()
+                                solicitar_avaliacao(escolhido["id"], f"{escolhido['nome']}", usuario_email)
+                                break
+                            elif op_acao == "2":
+                                limpar_tela()
+                                exibir_historico_avaliacoes(escolhido["id"], escolhido["nome"])
                     else:
-                        print("Opção inválida.")
+                        console.print("[bold red]Opção inválida.[/]")
                         input("\nPressione Enter para continuar...")
                 except ValueError:
-                    print("Opção inválida.")
+                    console.print("[bold red]Opção inválida.[/]")
                     input("\nPressione Enter para continuar...")
         else:
-            print("Opção inválida.")
+            console.print("[bold red]Opção inválida.[/]")
             input("\nPressione Enter para continuar...")
