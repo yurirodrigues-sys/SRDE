@@ -1,19 +1,14 @@
 # UniClass
 UniClass é uma plataforma com interface de terminal (TUI) desenvolvida no Python com a função de registrar e verificar a estrutura pertencente à Ceagri II.
 
-Principais aspectos
-
-• Sistema de avaliação de salas e respectivos componentes 
-• Cadastro e Login UFRPE
-• Reportagem de falta de materiais ou equipamentos danificados
-
 
 # V1.0 (1VA)
 
 • Sistema CRUD (Cadastro, Login, Deletar Conta, Recuperar Senha)
 
-• Avaliação dos equipamentos
+• Sistema de avaliação de salas e respectivos componentes 
 
+• Reportagem de falta de materiais ou equipamentos danificados
 
 
 # V2.0 (2VA)
@@ -27,7 +22,6 @@ Principais aspectos
 • Periféricos para os PCs
 
 • Criação de Classes para os equipamentos
-
 
 
 # V3.0 (3VA)
@@ -52,6 +46,7 @@ Melhorias:
 • Hashlib para criptografia de senha
 
 • Redução de duplicidade no código (função salvar_avaliacao)
+
 
 <img width="959" height="539" alt="1" src="https://github.com/user-attachments/assets/08d0dedf-66ec-411b-8667-e05a77a50c91" />
 <img width="959" height="539" alt="2" src="https://github.com/user-attachments/assets/b32795c2-18f4-4246-aa12-04e7b704fab4" />
