@@ -1,9 +1,9 @@
 import csv
 from datetime import datetime
-from auth2 import registrar_usuario, recuperar_senha, deletar_conta, deletar_conta_admin
-from sala2 import menu_sala
+from auth import registrar_usuario, recuperar_senha, deletar_conta, deletar_conta_admin
+from sala import menu_sala
 from data_base import inicializar_banco, obter_conexao
-from utils2 import limpar_tela, gerar_hash
+from utils import limpar_tela, gerar_hash
 from banheiros import menu_banheiros
 from rich.console import Console
 from rich.panel import Panel
