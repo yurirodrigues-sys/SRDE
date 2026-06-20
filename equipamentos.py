@@ -1,4 +1,4 @@
-from inventory2 import obter_ultima_avaliacao
+from inventory import obter_ultima_avaliacao
 
 # Classe Base (Mãe): Contém tudo o que é comum a QUALQUER equipamento do prédio
 class Equipamento:
