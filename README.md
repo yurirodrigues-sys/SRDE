@@ -7,11 +7,13 @@ Principais aspectos
 • Cadastro e Login UFRPE
 • Reportagem de falta de materiais ou equipamentos danificados
 
+
 # V1.0 (1VA)
 
 • Sistema CRUD (Cadastro, Login, Deletar Conta, Recuperar Senha)
 
 • Avaliação dos equipamentos
+
 
 
 # V2.0 (2VA)
@@ -25,6 +27,7 @@ Principais aspectos
 • Periféricos para os PCs
 
 • Criação de Classes para os equipamentos
+
 
 
 # V3.0 (3VA)
@@ -49,6 +52,7 @@ Melhorias:
 • Hashlib para criptografia de senha
 
 • Redução de duplicidade no código (função salvar_avaliacao)
+
 
 
 # Google Drive:
