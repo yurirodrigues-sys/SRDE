@@ -27,4 +27,28 @@ Principais aspectos
 • Criação de Classes para os equipamentos
 
 
+# V3.0 (3VA)
+
+Funcionalidades:
+
+• Relatório de Itens Críticos/Quebrados (Dashboard)
+
+• Histórico de Avaliações de um Item
+
+• Sistema de Log de Usuário (saber quem avaliou)
+
+• Controle de Acesso/Níveis de Permissão (Admin vs. Aluno)
+
+• Exportação de Dados para Relatório (CSV/Excel)
+
+Melhorias:
+
+• Interface atualizada com a biblioteca Rich
+
+• Hashlib para criptografia de senha
+
+• Redução de duplicidade no código (função salvar_avaliacao)
+
+
+
 https://drive.google.com/drive/folders/1SI3q59qIDr_4eY1cwY8J41ifS6LHjrUW
