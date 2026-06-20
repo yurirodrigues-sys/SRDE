@@ -1,6 +1,6 @@
 from equipamentos import EquipamentoSanitario
-from inventory2 import solicitar_avaliacao, exibir_historico_avaliacoes
-from utils2 import limpar_tela
+from inventory import solicitar_avaliacao, exibir_historico_avaliacoes
+from utils import limpar_tela
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
