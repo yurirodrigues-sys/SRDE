@@ -1,5 +1,5 @@
 import sqlite3
-from utils2 import gerar_hash
+from utils import gerar_hash
 
 DB_NAME = "uniclasse.db"
 
