@@ -53,9 +53,10 @@ Melhorias:
 
 • Redução de duplicidade no código (função salvar_avaliacao)
 
-<img width="959" height="539" alt="4" src="https://github.com/user-attachments/assets/70bae348-73af-4e00-9d1c-fe3cf032610b" /> <img width="959" height="539" alt="3" src="https://github.com/user-attachments/assets/3a8e8d4e-9fce-46e3-90bb-22b291e28b7c" />
-
-<img width="959" height="539" alt="2" src="https://github.com/user-attachments/assets/200b952c-a158-4aaa-a413-ac764fb4bd4c" /> <img width="959" height="539" alt="1" src="https://github.com/user-attachments/assets/8120c6d9-30d3-4280-bb29-922c4822edd5" />
+<img width="959" height="539" alt="4" src="https://github.com/user-attachments/assets/099bb0cd-eda8-4d1d-9bae-af7a23ac1316" />
+<img width="959" height="539" alt="3" src="https://github.com/user-attachments/assets/f2ca2d61-5a12-4666-90fe-8f6eb168181a" />
+<img width="959" height="539" alt="2" src="https://github.com/user-attachments/assets/b32795c2-18f4-4246-aa12-04e7b704fab4" />
+<img width="959" height="539" alt="1" src="https://github.com/user-attachments/assets/08d0dedf-66ec-411b-8667-e05a77a50c91" />
 
 
 # Google Drive:
