@@ -41,6 +41,7 @@ Funcionalidades:
 
 • Exportação de Dados para Relatório (CSV/Excel)
 
+
 Melhorias:
 
 • Interface atualizada com a biblioteca Rich
@@ -50,5 +51,6 @@ Melhorias:
 • Redução de duplicidade no código (função salvar_avaliacao)
 
 
+# Google Drive:
 
 https://drive.google.com/drive/folders/1SI3q59qIDr_4eY1cwY8J41ifS6LHjrUW
